@@ -1,0 +1,20 @@
+
+> agenda-bella@2.0.0 check
+> node scripts/validate.mjs
+
+OK src/main.jsx
+OK src/PremiumApp.jsx
+OK src/premium.css
+OK src/assets/salon-ambiente.jpg
+OK src/api.js
+OK public/manifest.webmanifest
+OK public/sw.js
+OK supabase/migrations/001_agenda_bella.sql
+OK supabase/functions/appointment-reminders/index.ts
+OK .github/workflows/ios-ipa.yml
+OK capacitor.config.json
+OK package.json
+Archivos principales presentes. Ejecuta npm run build para probar las dependencias y la compilación.
+
+Código de salida: 0
+Nota: validación de archivos, NO una compilación npm run build ni prueba nativa iOS.

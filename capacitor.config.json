@@ -1,0 +1,18 @@
+{
+  "appId": "mx.agendabella.salon",
+  "appName": "Agenda Bella",
+  "webDir": "dist",
+  "server": {
+    "iosScheme": "capacitor",
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#fff8f6"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#a4435c"
+    }
+  }
+}
