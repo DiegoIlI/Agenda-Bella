@@ -85,14 +85,14 @@ function Hero() {
     <div className="hero-inner wrapper">
       <div className="hero-copy">
         <div className="hero-topline" data-hero><SectionLabel>UN ESPACIO PARA TI</SectionLabel><span className="hero-issue">EST. EN MÉRIDA, YUCATÁN</span></div>
-        <h1 id="hero-title" data-hero>Tu belleza<br />merece <em>su<br />momento.</em><span className="hero-title-star" aria-hidden="true">✳</span></h1>
+        <h1 id="hero-title" data-hero>Tu belleza<br />merece <em>su<br />momento.</em><Sparkles className="hero-title-star" size={29} strokeWidth={1.35} aria-hidden="true" /></h1>
         <p className="hero-description" data-hero>Un lugar donde cada detalle habla de ti. Cabello, color, uñas y esos pequeños rituales que nos hacen sentir increíbles.</p>
         <div className="hero-buttons" data-hero><ButtonLink>Reservar mi cita</ButtonLink><a className="text-link" href="#servicios">Conoce los servicios <ArrowRight size={17}/></a></div>
         <div className="hero-caption" data-hero><div className="hero-caption-line" /><p><Heart size={16} strokeWidth={1.45} /> Tu momento especial comienza aquí.</p></div>
       </div>
       <div className="hero-visual" data-hero-image>
         <div className="hero-photo-frame"><img src="/images/salon-interior.webp" alt="Ambiente conceptual de un salón de belleza elegante; fotografía ilustrativa" fetchPriority="high" decoding="async" /><span className="hero-photo-grain" /></div>
-        <div className="hero-floating-badge"><span className="badge-sparkle">✳</span><span>BEAUTY<br /><em>rituals</em></span></div>
+        <div className="hero-floating-badge"><Sparkles className="badge-sparkle" size={25} strokeWidth={1.35} aria-hidden="true" /><span>BEAUTY<br /><em>rituals</em></span></div>
         <div className="hero-photo-mini"><img src="/images/unas-manicura.webp" alt="Manicura rosa de muestra" decoding="async" /><div className="mini-photo-caption">made with <span>♥</span></div></div>
         <div className="hero-photo-note">01 / 04 — UN UNIVERSO BELLA</div>
       </div>
@@ -103,7 +103,7 @@ function Hero() {
 
 function Ticker() {
   const text = ['CABELLO & COLOR', 'PEINADOS CON ESTILO', 'MANICURA & UÑAS', 'TU MOMENTO DE BRILLAR'];
-  return <div className="ticker" aria-label="Cabello, peinados, color y uñas"><div className="ticker-track" aria-hidden="true">{[0,1,2].map(n=><div className="ticker-chunk" key={n}>{text.map((t,i)=><span key={t}><span className="ticker-star">✳</span>{t}</span>)}</div>)}</div></div>;
+  return <div className="ticker" aria-label="Cabello, peinados, color y uñas"><div className="ticker-track" aria-hidden="true">{[0,1,2].map(n=><div className="ticker-chunk" key={n}>{text.map((t,i)=><span key={t}><Sparkles className="ticker-star" size={23} strokeWidth={1.35} aria-hidden="true" />{t}</span>)}</div>)}</div></div>;
 }
 
 function About() {
@@ -132,7 +132,7 @@ function Experience() {
     { n:'03', icon:<Heart size={30} strokeWidth={1.35}/>, title:'Nos vemos pronto', body:'Confirma tu cita y guarda sus detalles para el día especial.'},
   ];
   return <section id="experiencia" className="experience section-pad">
-    <div className="wrapper experience-layout"><div className="experience-intro" data-reveal><SectionLabel light>RESERVAR ES MUY SENCILLO</SectionLabel><h2>Tu momento<br /><em>empieza aquí.</em></h2><p>Sin llamadas, sin complicaciones. Tu próxima cita, a unos cuantos clics de distancia.</p><ButtonLink className="button-cream" icon={ArrowRight}>Agendar ahora</ButtonLink><span className="experience-sprig" aria-hidden="true">✳</span></div>
+    <div className="wrapper experience-layout"><div className="experience-intro" data-reveal><SectionLabel light>RESERVAR ES MUY SENCILLO</SectionLabel><h2>Tu momento<br /><em>empieza aquí.</em></h2><p>Sin llamadas, sin complicaciones. Tu próxima cita, a unos cuantos clics de distancia.</p><ButtonLink className="button-cream" icon={ArrowRight}>Agendar ahora</ButtonLink><Sparkles className="experience-sprig" size={82} strokeWidth={0.9} aria-hidden="true" /></div>
       <div className="steps">{items.map(item=><div className="step" key={item.n} data-reveal><div className="step-icon">{item.icon}</div><div className="step-main"><span className="step-number">PASO {item.n}</span><h3>{item.title}</h3><p>{item.body}</p></div><ArrowUpRight className="step-arrow" size={18}/></div>)}</div>
     </div>
   </section>;
