@@ -18,8 +18,8 @@ const TABS = [['agenda', 'Agenda', CalendarDays], ['clientas', 'Clientas', Users
 
 export function AdminApp({ salon, reloadPublic }) {
   const [user, setUser] = useState(undefined); const [denied, setDenied] = useState(false);
-  useEffect(() => { api.getSessionUser().then(async u => { if (u && await api.isStaff(u.id).catch(() => false)) setUser(u); else { setUser(null); if (u) { setDenied(true); api.signOut(); } } }).catch(() => setUser(null)); }, []);
-  const onLogin = async u => { if (await api.isStaff(u.id).catch(() => false)) { setDenied(false); setUser(u); } else { await api.signOut(); setDenied(true); setUser(null); } };
+  useEffect(() => { api.getSessionUser().then(async u => { if (u && await api.isStaff(u.id).catch(() => false)) setUser(u); else { setUser(null); if (u) setDenied(true); } }).catch(() => setUser(null)); }, []);
+  const onLogin = async u => { if (await api.isStaff(u.id).catch(() => false)) { setDenied(false); setUser(u); } else { setDenied(true); setUser(null); } };
   if (user === undefined) return <div className="screen"><Spinner /></div>;
   if (!user) return <Login onDone={onLogin} denied={denied} />;
   return <Panel salon={salon} reloadPublic={reloadPublic} onLogout={async () => { await api.signOut(); setUser(null); }} />;

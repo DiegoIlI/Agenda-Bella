@@ -1,3 +1,9 @@
+# Agenda Bella v3.1 — cuentas opcionales + activación privada de la estilista
+
+**Empieza leyendo [`COMO_ACTIVAR_CUENTAS.md`](COMO_ACTIVAR_CUENTAS.md)**. El proyecto completo de v3 sigue incluido. Para esta versión NO vuelvas a ejecutar `setup_completo.sql`: instala únicamente `supabase/v3_1_cuentas.sql` en tu base ya creada, y genera el código de la estilista con el segundo archivo SQL si es necesario.
+
+---
+
 # Agenda Bella · Beauty Studio (v3)
 
 Sistema de reservaciones para el salón (cabello y uñas, Mérida, Yucatán). Mantiene la base React + Vite + Supabase + Capacitor de la versión anterior.

@@ -59,6 +59,44 @@ export const liveApi = {
     ok(await getDb().rpc('register_push', { p_token: token, p_endpoint: v.endpoint, p_p256dh: v.keys.p256dh, p_auth: v.keys.auth }));
   },
 
+  // ---- Cuentas opcionales de clientas y alta protegida de la estilista ----
+  async registerClient({ email, password, full_name, phone }) {
+    const r = await getDb().auth.signUp({ email: email.trim(), password, options: { data: { full_name: full_name.trim(), phone: phone.trim() } } });
+    if (r.error) throw friendlyError(r.error);
+    if (r.data.session) await this.saveClientProfile({ full_name, phone });
+    return r.data;
+  },
+  async getClientProfile() {
+    const db = getDb();
+    const { data: { user }, error } = await db.auth.getUser();
+    if (error || !user) return null;
+    const result = await db.from('client_profiles').select('full_name,phone').eq('user_id', user.id).maybeSingle();
+    const profile = ok(result);
+    if (profile) return profile;
+    // Los metadatos de Auth se usan solo para llenar SU PROPIO perfil.
+    const initial = { full_name: String(user.user_metadata?.full_name || '').slice(0, 70), phone: String(user.user_metadata?.phone || '').slice(0, 20) };
+    await this.saveClientProfile(initial);
+    return initial;
+  },
+  async saveClientProfile({ full_name, phone }) {
+    const db = getDb();
+    const { data: { user }, error } = await db.auth.getUser();
+    if (error || !user) throw new Error('Inicia sesión para guardar tus datos.');
+    const row = { user_id: user.id, full_name: String(full_name || '').trim().slice(0, 70), phone: String(phone || '').trim().slice(0, 20), updated_at: new Date().toISOString() };
+    if (row.full_name.length < 2 || !/^\+?[0-9 ()-]{10,20}$/.test(row.phone)) throw new Error('Revisa tu nombre completo y tu número celular.');
+    ok(await db.from('client_profiles').upsert(row, { onConflict: 'user_id' }));
+  },
+  async registerOwner({ email, password, name }) {
+    const r = await getDb().auth.signUp({ email: email.trim(), password, options: { data: { full_name: name.trim() } } });
+    if (r.error) throw friendlyError(r.error);
+    return r.data;
+  },
+  async redeemOwner(code) {
+    if (!/^[A-F0-9]{32}$/.test(code)) throw new Error('El código de activación debe tener 32 letras o números.');
+    const r = await getDb().rpc('redeem_owner_activation', { p_code: code });
+    return ok(r);
+  },
+
   // ---- Sesión de la dueña (Supabase Auth) ----
   async getSessionUser() { const { data } = await getDb().auth.getSession(); return data?.session?.user || null; },
   async signIn(email, password) {

@@ -10,7 +10,7 @@ import { PrivacyNotice } from './Privacy.jsx';
 import { localToday, addMonths, firstOfMonth, addDays, shortDay, formatTime, durationText, toLocalDayTime, longDay } from '../lib/dates.js';
 import { money, validatePhone, normalizePhone, makeWhatsApp } from '../lib/format.js';
 import { rememberBooking, myBookingTokens } from '../notifications.js';
-import { MessageCircle, Lock } from 'lucide-react';
+import { MessageCircle, Lock, UserRound } from 'lucide-react';
 
 const FIRST_COUNT = 4;
 
@@ -65,6 +65,7 @@ export function ClientBooking({ data }) {
       <SideMenu open={menu} onClose={() => setMenu(false)} items={[
         { label: 'Reservar cita', icon: <Calendar size={20} />, onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
         waHref && { label: 'WhatsApp del salón', icon: <MessageCircle size={20} />, href: waHref, external: true },
+        { label: 'Mi cuenta (opcional)', icon: <UserRound size={20} />, href: '#/cuenta' },
         { label: 'Aviso de privacidad', icon: <Lock size={20} />, onClick: () => setForm('privacy') },
         { label: 'Acceso del salón', icon: <Lock size={20} />, href: '#/admin' },
       ].filter(Boolean)} />
@@ -105,6 +106,7 @@ export function ClientBooking({ data }) {
 
 function ConfirmSheet({ service, day, time, settings, onClose, onTaken }) {
   const [f, setF] = useState({ name: '', phone: '', wa: false, privacy: false });
+  useEffect(() => { api.getClientProfile?.().then(p => { if (p) setF(cur => ({ ...cur, name: cur.name || p.full_name || '', phone: cur.phone || p.phone || '' })); }).catch(() => {}); }, []);
   const [busy, setBusy] = useState(false); const [err, setErr] = useState(''); const [touched, setTouched] = useState(false); const [priv, setPriv] = useState(false);
   const errors = { name: f.name.trim().length < 2 ? 'Escribe tu nombre completo.' : '', phone: validatePhone(f.phone) ? '' : 'Escribe 10 dígitos (ej. 999 123 4567).', privacy: f.privacy ? '' : 'Debes aceptar para reservar.' };
   const submit = async e => {

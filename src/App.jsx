@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api, mode } from './api/index.js';
 import { ClientBooking } from './client/ClientBooking.jsx';
+import { ClientAccount } from './client/ClientAccount.jsx';
 import { Receipt } from './client/Receipt.jsx';
 import { AdminApp } from './admin/AdminApp.jsx';
 import { Spinner, Notice } from './components/ui.jsx';
@@ -33,6 +34,7 @@ export default function App() {
   if (mode === 'unconfigured') return <SetupPending />;
   if (error && !data) return <div className="screen pad"><Notice tone="error" action={<button className="link" onClick={load}>Reintentar</button>}>{error}</Notice></div>;
   if (!data) return <div className="screen"><Spinner /></div>;
+  if (hash.startsWith('#/cuenta')) return <ClientAccount />;
   if (hash.startsWith('#/admin')) return <AdminApp salon={data.settings} reloadPublic={load} />;
   const m = hash.match(/^#\/cita\/([0-9a-f-]{36})$/i);
   if (m) return <Receipt token={m[1]} settings={data.settings} />;
