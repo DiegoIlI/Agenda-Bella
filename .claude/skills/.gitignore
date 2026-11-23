@@ -1,0 +1,3 @@
+# Cachés de Python generadas al ejecutar los scripts de las skills
+__pycache__/
+*.pyc
